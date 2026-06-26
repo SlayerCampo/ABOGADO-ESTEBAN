@@ -9,8 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('revealed');
-                // Opcional: dejar de observar una vez revelado
-                // revealObserver.unobserve(entry.target);
             }
         });
     }, {
@@ -24,28 +22,50 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     /* ============================================ */
-    /* HEADER SCROLL EFFECT                         */
+    /* INTERSECTION OBSERVER - Tarjetas de Servicio */
+    /* ============================================ */
+    const serviceCards = document.querySelectorAll('.servicio-card');
+
+    const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, {
+        root: null,
+        rootMargin: '-20% 0px -20% 0px',
+        threshold: 0.3
+    });
+
+    serviceCards.forEach(card => {
+        cardObserver.observe(card);
+    });
+
+    /* ============================================ */
+    /* NAVBAR REVEAL (Oculto en Hero, visible al scroll) */
     /* ============================================ */
     const header = document.getElementById('header');
-    let lastScrollY = window.scrollY;
+    const heroSection = document.querySelector('.hero');
     let ticking = false;
 
-    function updateHeader() {
+    function updateNavbar() {
         const scrollY = window.scrollY;
+        const heroHeight = heroSection.offsetHeight;
 
-        if (scrollY > 50) {
-            header.classList.add('header--scrolled');
+        // Mostrar navbar cuando el scroll supera el 80% del hero
+        if (scrollY > heroHeight * 0.8) {
+            header.classList.add('header--visible');
         } else {
-            header.classList.remove('header--scrolled');
+            header.classList.remove('header--visible');
         }
 
-        lastScrollY = scrollY;
         ticking = false;
     }
 
     window.addEventListener('scroll', function() {
         if (!ticking) {
-            window.requestAnimationFrame(updateHeader);
+            window.requestAnimationFrame(updateNavbar);
             ticking = true;
         }
     });
@@ -61,8 +81,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const isOpen = hamburgerBtn.classList.toggle('header__hamburger--open');
         headerNav.classList.toggle('header__nav--open');
         hamburgerBtn.setAttribute('aria-expanded', isOpen);
-
-        // Prevenir scroll del body cuando el menú está abierto
         document.body.style.overflow = isOpen ? 'hidden' : '';
     }
 
@@ -75,12 +93,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     hamburgerBtn.addEventListener('click', toggleMenu);
 
-    // Cerrar menú al hacer click en un enlace
     navLinks.forEach(link => {
         link.addEventListener('click', closeMenu);
     });
 
-    // Cerrar menú al hacer click fuera
     document.addEventListener('click', function(e) {
         if (headerNav.classList.contains('header__nav--open') && 
             !headerNav.contains(e.target) && 
@@ -89,7 +105,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Cerrar menú con la tecla Escape
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && headerNav.classList.contains('header__nav--open')) {
             closeMenu();
@@ -125,18 +140,42 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     /* ============================================ */
-    /* CONTACT FORM HANDLING                        */
+    /* THEME SELECTOR SYSTEM (9 TEMAS)              */
+    /* ============================================ */
+    const themeBtns = document.querySelectorAll('.theme-btn');
+    const body = document.body;
+
+    // Cargar tema guardado o usar default
+    const savedTheme = localStorage.getItem('theme') || 'principal';
+    setTheme(savedTheme);
+
+    function setTheme(themeName) {
+        body.setAttribute('data-theme', themeName);
+
+        themeBtns.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.getAttribute('data-theme') === themeName) {
+                btn.classList.add('active');
+            }
+        });
+
+        localStorage.setItem('theme', themeName);
+    }
+
+    themeBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const theme = this.getAttribute('data-theme');
+            setTheme(theme);
+        });
+    });
+
+    /* ============================================ */
+    /* CONTACT FORM - FormSubmit Integration        */
     /* ============================================ */
     const contactForm = document.getElementById('contactForm');
 
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const formData = new FormData(contactForm);
-            const data = Object.fromEntries(formData.entries());
-
-            // Simulación de envío
             const submitBtn = contactForm.querySelector('.contacto__form-submit');
             const originalText = submitBtn.innerHTML;
 
@@ -148,26 +187,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 Enviando...
             `;
 
-            // Simular delay de envío
             setTimeout(() => {
-                submitBtn.innerHTML = `
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>
-                    ¡Mensaje enviado!
-                `;
-                submitBtn.style.background = '#25D366';
-
-                // Reset después de 3 segundos
-                setTimeout(() => {
+                if (submitBtn.disabled) {
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = originalText;
-                    submitBtn.style.background = '';
-                    contactForm.reset();
-                }, 3000);
-
-                console.log('Formulario enviado:', data);
-            }, 1500);
+                }
+            }, 10000);
         });
     }
 
@@ -193,24 +218,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     /* ============================================ */
-    /* CARRUSEL PAUSE ON TOUCH/HOVER               */
-    /* ============================================ */
-    const clientesTrack = document.getElementById('clientesTrack');
-
-    if (clientesTrack) {
-        // Pausar al tocar en móvil
-        clientesTrack.addEventListener('touchstart', function() {
-            clientesTrack.style.animationPlayState = 'paused';
-        });
-
-        clientesTrack.addEventListener('touchend', function() {
-            setTimeout(() => {
-                clientesTrack.style.animationPlayState = 'running';
-            }, 2000);
-        });
-    }
-
-    /* ============================================ */
     /* HERO PARALLAX SUBTLE EFFECT                  */
     /* ============================================ */
     const heroShapes = document.querySelectorAll('.hero__shape');
@@ -218,7 +225,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (heroShapes.length > 0 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         window.addEventListener('scroll', function() {
             const scrollY = window.scrollY;
-            const heroSection = document.querySelector('.hero');
             const heroHeight = heroSection.offsetHeight;
 
             if (scrollY < heroHeight) {

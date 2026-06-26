@@ -3,23 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E | Abogado — Justicia con Excelencia</title>
+    <title>Tus Derechos a la Mano</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+<base target="_blank">
 </head>
-<body>
+<body data-theme="principal">
 
     <!-- ============================================ -->
-    <!-- HEADER / NAVBAR                              -->
+    <!-- HEADER / NAVBAR (Oculto inicialmente)        -->
     <!-- ============================================ -->
     <header class="header" id="header">
         <div class="header__container">
             <a href="#inicio" class="header__logo">
-                <span class="header__logo-mark">E</span>
-                <span class="header__logo-divider">|</span>
-                <span class="header__logo-text">Abogado</span>
+                <div class="header__logo-icon">
+                    <img src="logoNAV.png" alt="Logo báscula" class="header__logo-img">
+                </div>
+                <span class="header__logo-text">Tus Derechos a la Mano</span>
             </a>
 
             <nav class="header__nav" id="headerNav">
@@ -27,10 +29,37 @@
                     <li><a href="#inicio" class="header__nav-link active">Inicio</a></li>
                     <li><a href="#perfil" class="header__nav-link">Perfil</a></li>
                     <li><a href="#servicios" class="header__nav-link">Servicios</a></li>
-                    <li><a href="#clientes" class="header__nav-link">Clientes</a></li>
                     <li><a href="#contacto" class="header__nav-link">Contacto</a></li>
+                    <!-- Selector de temas (visible en móvil dentro del menú) -->
+                    <li class="header__theme-mobile">
+                        <span class="header__theme-label">Tema</span>
+                        <div class="theme-selector theme-selector--mobile">
+                            <button class="theme-btn" data-theme="principal" title="Principal" aria-label="Tema Principal"></button>
+                            <button class="theme-btn" data-theme="clasico" title="Clásico" aria-label="Tema Clásico"></button>
+                            <button class="theme-btn" data-theme="monocromatico" title="Monocromático" aria-label="Tema Monocromático"></button>
+                            <button class="theme-btn" data-theme="confianza" title="Confianza" aria-label="Tema Confianza"></button>
+                            <button class="theme-btn" data-theme="amatista" title="Amatista" aria-label="Tema Amatista"></button>
+                            <button class="theme-btn" data-theme="azul-acero" title="Azul Acero" aria-label="Tema Azul Acero"></button>
+                            <button class="theme-btn" data-theme="bordeaux" title="Bordeaux" aria-label="Tema Bordeaux"></button>
+                            <button class="theme-btn" data-theme="obsidiana" title="Obsidiana" aria-label="Tema Obsidiana"></button>
+                            <button class="theme-btn" data-theme="zafiro" title="Zafiro" aria-label="Tema Zafiro"></button>
+                        </div>
+                    </li>
                 </ul>
             </nav>
+
+            <!-- Selector de temas (visible en escritorio) -->
+            <div class="theme-selector theme-selector--desktop">
+                <button class="theme-btn" data-theme="principal" title="Principal" aria-label="Tema Principal"></button>
+                <button class="theme-btn" data-theme="clasico" title="Clásico" aria-label="Tema Clásico"></button>
+                <button class="theme-btn" data-theme="monocromatico" title="Monocromático" aria-label="Tema Monocromático"></button>
+                <button class="theme-btn" data-theme="confianza" title="Confianza" aria-label="Tema Confianza"></button>
+                <button class="theme-btn" data-theme="amatista" title="Amatista" aria-label="Tema Amatista"></button>
+                <button class="theme-btn" data-theme="azul-acero" title="Azul Acero" aria-label="Tema Azul Acero"></button>
+                <button class="theme-btn" data-theme="bordeaux" title="Bordeaux" aria-label="Tema Bordeaux"></button>
+                <button class="theme-btn" data-theme="obsidiana" title="Obsidiana" aria-label="Tema Obsidiana"></button>
+                <button class="theme-btn" data-theme="zafiro" title="Zafiro" aria-label="Tema Zafiro"></button>
+            </div>
 
             <button class="header__hamburger" id="hamburgerBtn" aria-label="Menú" aria-expanded="false">
                 <span class="header__hamburger-line"></span>
@@ -41,7 +70,7 @@
     </header>
 
     <!-- ============================================ -->
-    <!-- HERO SECTION                                 -->
+    <!-- HERO SECTION (100vh, 2 columnas, no navbar)  -->
     <!-- ============================================ -->
     <section class="hero" id="inicio">
         <div class="hero__bg-shapes">
@@ -50,27 +79,35 @@
             <div class="hero__shape hero__shape--3"></div>
             <div class="hero__shape hero__shape--4"></div>
             <div class="hero__shape hero__shape--5"></div>
+            <div class="hero__shape hero__shape--6"></div>
         </div>
         <div class="hero__overlay"></div>
 
-        <div class="hero__content">
-            <p class="hero__subtitle reveal-on-scroll">Derecho Corporativo & Civil</p>
-            <h1 class="hero__title reveal-on-scroll">
-                Defiendo tus intereses<br>
-                <span class="hero__title-accent">con excelencia</span>
-            </h1>
-            <p class="hero__description reveal-on-scroll">
-                Más de ### años de experiencia brindando asesoría jurídica 
-                estratégica a personas y empresas. Compromiso, ética y resultados 
-                que marcan la diferencia.
-            </p>
-            <a href="#contacto" class="hero__cta reveal-on-scroll">
-                Consulta Gratuita
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-            </a>
+        <div class="hero__container">
+            <div class="hero__col-left reveal-on-scroll">
+                <div class="hero__logo-wrapper">
+                    <img src="logo.png" alt="Logo Tus Derechos a la Mano" class="hero__logo-img">
+                </div>
+            </div>
+
+            <div class="hero__col-right">
+                <p class="hero__subtitle reveal-on-scroll">Consultoría Legal & Asesoría</p>
+                <h1 class="hero__title reveal-on-scroll">
+                    Protegemos tus derechos<br>
+                    <span class="hero__title-accent">de forma rápida y efectiva.</span>
+                </h1>
+                <p class="hero__description reveal-on-scroll">
+                    Asesoría jurídica accesible, experta y enfocada en resultados para resolver 
+                    tus problemas con entidades públicas, privadas o financieras.
+                </p>
+                <a href="#contacto" class="hero__cta reveal-on-scroll">
+                    Inicia tu consulta hoy
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+            </div>
         </div>
 
         <div class="hero__scroll-indicator">
@@ -85,54 +122,45 @@
         <div class="perfil__container">
             <div class="perfil__image-wrapper reveal-on-scroll">
                 <div class="perfil__image">
-                    <div class="perfil__image-placeholder">
-                        <span>E</span>
-                    </div>
+                    <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&h=800&fit=crop&q=80" 
+                         alt="Profesionales de derecho trabajando en equipo" 
+                         class="perfil__img">
                 </div>
                 <div class="perfil__image-accent"></div>
             </div>
 
             <div class="perfil__content">
-                <p class="perfil__label reveal-on-scroll">Sobre mí</p>
+                <p class="perfil__label reveal-on-scroll">Sobre nosotros</p>
                 <h2 class="perfil__title reveal-on-scroll">
-                    Trayectoria, compromiso<br>y resultados
+                    Compromiso y Conocimiento<br>a tu Servicio
                 </h2>
                 <div class="perfil__divider reveal-on-scroll"></div>
 
                 <div class="perfil__text reveal-on-scroll">
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do 
-                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim 
-                        ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
-                        aliquip ex ea commodo consequat.
+                        Somos un equipo dedicado a la defensa de tus derechos fundamentales. 
+                        Nos especializamos en desentrañar la burocracia y ofrecerte soluciones 
+                        claras, honestas y directas.
                     </p>
                     <p>
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse 
-                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat 
-                        cupidatat non proident, sunt in culpa qui officia deserunt mollit 
-                        anim id est laborum. Sed ut perspiciatis unde omnis iste natus 
-                        error sit voluptatem accusantium doloremque laudantium.
-                    </p>
-                    <p>
-                        Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et 
-                        quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam 
-                        voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia 
-                        consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+                        No importa si es un trámite de salud o una crisis financiera, nuestra 
+                        misión es acompañarte en cada paso del proceso con total transparencia 
+                        y eficacia.
                     </p>
                 </div>
 
                 <div class="perfil__stats reveal-on-scroll">
                     <div class="perfil__stat">
-                        <span class="perfil__stat-number">##+</span>
-                        <span class="perfil__stat-label">Años de experiencia</span>
+                        <span class="perfil__stat-number">500+</span>
+                        <span class="perfil__stat-label">Casos atendidos</span>
                     </div>
                     <div class="perfil__stat">
-                        <span class="perfil__stat-number">###+</span>
-                        <span class="perfil__stat-label">Casos resueltos</span>
-                    </div>
-                    <div class="perfil__stat">
-                        <span class="perfil__stat-number">###%</span>
+                        <span class="perfil__stat-number">98%</span>
                         <span class="perfil__stat-label">Clientes satisfechos</span>
+                    </div>
+                    <div class="perfil__stat">
+                        <span class="perfil__stat-number">24h</span>
+                        <span class="perfil__stat-label">Respuesta garantizada</span>
                     </div>
                 </div>
             </div>
@@ -145,78 +173,52 @@
     <section class="servicios" id="servicios">
         <div class="servicios__container">
             <div class="servicios__header">
-                <p class="servicios__label reveal-on-scroll">Áreas de práctica</p>
-                <h2 class="servicios__title reveal-on-scroll">Servicios Jurídicos</h2>
+                <p class="servicios__label reveal-on-scroll">Nuestros servicios</p>
+                <h2 class="servicios__title reveal-on-scroll">¿En qué podemos ayudarte?</h2>
                 <div class="servicios__divider reveal-on-scroll"></div>
-                <p class="servicios__description reveal-on-scroll">
-                    Ofrezco asesoría integral en diversas ramas del derecho, 
-                    adaptada a las necesidades específicas de cada cliente.
-                </p>
             </div>
 
             <div class="servicios__grid">
-                <article class="servicio-card reveal-on-scroll">
-                    <div class="servicio-card__icon">💼</div>
-                    <h3 class="servicio-card__title">Derecho Corporativo</h3>
+                <article class="servicio-card reveal-on-scroll" data-service="salud">
+                    <div class="servicio-card__icon">⚕️</div>
+                    <h3 class="servicio-card__title">¿Problemas con tu EPS?</h3>
                     <p class="servicio-card__text">
-                        Asesoría en constitución de sociedades, fusiones, adquisiciones, 
-                        contratos comerciales y gobierno corporativo. Protección integral 
-                        para el crecimiento de tu empresa.
+                        Si no te entregan medicamentos, te posponen cirugías o no logras 
+                        agendar citas, la Acción de Tutela es la clave. Nosotros la 
+                        gestionamos por ti.
                     </p>
                     <div class="servicio-card__line"></div>
                 </article>
 
-                <article class="servicio-card reveal-on-scroll">
+                <article class="servicio-card reveal-on-scroll" data-service="orientacion">
                     <div class="servicio-card__icon">⚖️</div>
-                    <h3 class="servicio-card__title">Litigio Civil</h3>
+                    <h3 class="servicio-card__title">Asesoría General</h3>
                     <p class="servicio-card__text">
-                        Representación en procesos judiciales de índole civil, 
-                        incluyendo reclamaciones de daños, incumplimiento de contratos 
-                        y resolución de conflictos patrimoniales.
+                        ¿Tienes un problema legal pero no sabes a qué especialista acudir? 
+                        Te orientamos, analizamos tu caso y te conectamos con los 
+                        expertos adecuados.
                     </p>
                     <div class="servicio-card__line"></div>
                 </article>
 
-                <article class="servicio-card reveal-on-scroll">
+                <article class="servicio-card reveal-on-scroll" data-service="peticion">
                     <div class="servicio-card__icon">📄</div>
-                    <h3 class="servicio-card__title">Contratos & Documentos</h3>
+                    <h3 class="servicio-card__title">Solicitudes a Entidades</h3>
                     <p class="servicio-card__text">
-                        Redacción, revisión y negociación de contratos de todo tipo. 
-                        Garantizamos que cada documento proteja tus intereses de 
-                        manera clara y vinculante.
+                        ¿Necesitas respuestas de entidades públicas o empresas de servicios? 
+                        Un Derecho de Petición bien redactado es ideal para ti. Te decimos 
+                        cuál es el siguiente paso.
                     </p>
                     <div class="servicio-card__line"></div>
                 </article>
 
-                <article class="servicio-card reveal-on-scroll">
-                    <div class="servicio-card__icon">🤝</div>
-                    <h3 class="servicio-card__title">Mediación & Arbitraje</h3>
+                <article class="servicio-card reveal-on-scroll" data-service="insolvencia">
+                    <div class="servicio-card__icon">📉</div>
+                    <h3 class="servicio-card__title">Ley de Insolvencia</h3>
                     <p class="servicio-card__text">
-                        Resolución alternativa de conflictos mediante mediación 
-                        y arbitraje. Soluciones rápidas, confidenciales y 
-                        costo-eficientes para disputas complejas.
-                    </p>
-                    <div class="servicio-card__line"></div>
-                </article>
-
-                <article class="servicio-card reveal-on-scroll">
-                    <div class="servicio-card__icon">💡</div>
-                    <h3 class="servicio-card__title">Propiedad Intelectual</h3>
-                    <p class="servicio-card__text">
-                        Registro y protección de marcas, patentes, derechos de autor 
-                        y secretos comerciales. Salvaguarda el valor intangible de 
-                        tu negocio ante cualquier amenaza.
-                    </p>
-                    <div class="servicio-card__line"></div>
-                </article>
-
-                <article class="servicio-card reveal-on-scroll">
-                    <div class="servicio-card__icon">🏛️</div>
-                    <h3 class="servicio-card__title">Derecho Administrativo</h3>
-                    <p class="servicio-card__text">
-                        Defensa ante procedimientos administrativos, recursos de 
-                        reposición, reclamaciones patrimoniales y asesoría en 
-                        contratación pública y regulaciones.
+                        ¿Estás atrasado con las cuotas y los bancos no dejan de llamar? 
+                        Somos conocedores del tema, te asesoramos en todo el proceso y 
+                        te guiamos para recuperar tu tranquilidad.
                     </p>
                     <div class="servicio-card__line"></div>
                 </article>
@@ -225,75 +227,15 @@
     </section>
 
     <!-- ============================================ -->
-    <!-- CLIENTES SECTION (CARRUSEL)                  -->
+    <!-- BANNER IMAGEN DECORATIVA                     -->
     <!-- ============================================ -->
-    <section class="clientes" id="clientes">
-        <div class="clientes__container">
-            <div class="clientes__header">
-                <p class="clientes__label reveal-on-scroll">Confían en nosotros</p>
-                <h2 class="clientes__title reveal-on-scroll">Clientes & Aliados</h2>
-                <div class="clientes__divider reveal-on-scroll"></div>
-            </div>
-
-            <div class="clientes__carousel-wrapper reveal-on-scroll">
-                <div class="clientes__carousel">
-                    <div class="clientes__track" id="clientesTrack">
-                        <!-- Primer set -->
-                        <div class="clientes__item">
-                            <span class="clientes__item-name">LexCorp International</span>
-                        </div>
-                        <div class="clientes__item">
-                            <span class="clientes__item-name">Global Finance SA</span>
-                        </div>
-                        <div class="clientes__item">
-                            <span class="clientes__item-name">Inmobiliaria Horizonte</span>
-                        </div>
-                        <div class="clientes__item">
-                            <span class="clientes__item-name">TechNova Solutions</span>
-                        </div>
-                        <div class="clientes__item">
-                            <span class="clientes__item-name">Grupo Constructor del Sur</span>
-                        </div>
-                        <div class="clientes__item">
-                            <span class="clientes__item-name">Alimentos del Valle</span>
-                        </div>
-                        <div class="clientes__item">
-                            <span class="clientes__item-name">Consultora Estratégica</span>
-                        </div>
-                        <div class="clientes__item">
-                            <span class="clientes__item-name">Banca Regional</span>
-                        </div>
-                        <!-- Duplicado para loop infinito -->
-                        <div class="clientes__item">
-                            <span class="clientes__item-name">LexCorp International</span>
-                        </div>
-                        <div class="clientes__item">
-                            <span class="clientes__item-name">Global Finance SA</span>
-                        </div>
-                        <div class="clientes__item">
-                            <span class="clientes__item-name">Inmobiliaria Horizonte</span>
-                        </div>
-                        <div class="clientes__item">
-                            <span class="clientes__item-name">TechNova Solutions</span>
-                        </div>
-                        <div class="clientes__item">
-                            <span class="clientes__item-name">Grupo Constructor del Sur</span>
-                        </div>
-                        <div class="clientes__item">
-                            <span class="clientes__item-name">Alimentos del Valle</span>
-                        </div>
-                        <div class="clientes__item">
-                            <span class="clientes__item-name">Consultora Estratégica</span>
-                        </div>
-                        <div class="clientes__item">
-                            <span class="clientes__item-name">Banca Regional</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- Gradientes de fade -->
-                <div class="clientes__fade clientes__fade--left"></div>
-                <div class="clientes__fade clientes__fade--right"></div>
-            </div>
+    <section class="banner-imagen">
+        <div class="banner-imagen__overlay"></div>
+        <img src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=1600&h=500&fit=crop&q=80" 
+             alt="Martillo de juez sobre escritorio de madera" 
+             class="banner-imagen__img">
+        <div class="banner-imagen__content">
+            <p class="banner-imagen__text reveal-on-scroll">"La justicia no debe ser un privilegio, sino un derecho accesible para todos."</p>
         </div>
     </section>
 
@@ -309,7 +251,7 @@
                 </h2>
                 <div class="contacto__divider reveal-on-scroll"></div>
                 <p class="contacto__description reveal-on-scroll">
-                    Agenda una consulta inicial gratuita y descubre cómo puedo 
+                    Agenda una consulta inicial gratuita y descubre cómo podemos 
                     ayudarte a resolver tus asuntos jurídicos con la máxima 
                     profesionalidad.
                 </p>
@@ -323,7 +265,7 @@
                         </div>
                         <div>
                             <span class="contacto__detail-label">Teléfono</span>
-                            <span class="contacto__detail-value">+57 #########</span>
+                            <span class="contacto__detail-value">+1 (555) 123-4567</span>
                         </div>
                     </div>
 
@@ -336,7 +278,7 @@
                         </div>
                         <div>
                             <span class="contacto__detail-label">Correo electrónico</span>
-                            <span class="contacto__detail-value">estebanquito@abogado.com</span>
+                            <span class="contacto__detail-value">tusderechosalamano@gmail.com</span>
                         </div>
                     </div>
 
@@ -349,7 +291,7 @@
                         </div>
                         <div>
                             <span class="contacto__detail-label">Dirección</span>
-                            <span class="contacto__detail-value">#### cali, colombia</span>
+                            <span class="contacto__detail-value">Av. Reforma 1234, Piso 8, Ciudad</span>
                         </div>
                     </div>
 
@@ -362,14 +304,19 @@
                         </div>
                         <div>
                             <span class="contacto__detail-label">Horario de atención</span>
-                            <span class="contacto__detail-value">Lun — Vie: 9:00am a 9:00pm</span>
+                            <span class="contacto__detail-value">Lun — Vie: 9:00 a 18:00</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="contacto__form-wrapper reveal-on-scroll">
-                <form class="contacto__form" id="contactForm">
+                <form class="contacto__form" id="contactForm" action="https://formsubmit.co/tusderechosalamano@gmail.com" method="POST">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_next" value="https://tusderechosalamano.com/gracias.html">
+                    <input type="hidden" name="_subject" value="Nueva consulta desde la web">
+                    <input type="hidden" name="_template" value="table">
+
                     <div class="contacto__form-group">
                         <label for="nombre" class="contacto__form-label">Nombre completo</label>
                         <input type="text" id="nombre" name="nombre" class="contacto__form-input" placeholder="Tu nombre" required>
@@ -386,16 +333,14 @@
                     </div>
 
                     <div class="contacto__form-group">
-                        <label for="asunto" class="contacto__form-label">Asunto</label>
-                        <select id="asunto" name="asunto" class="contacto__form-input contacto__form-select">
-                            <option value="" disabled selected>Selecciona un área</option>
-                            <option value="corporativo">Derecho Corporativo</option>
-                            <option value="civil">Litigio Civil</option>
-                            <option value="contratos">Contratos & Documentos</option>
-                            <option value="mediacion">Mediación & Arbitraje</option>
-                            <option value="ip">Propiedad Intelectual</option>
-                            <option value="administrativo">Derecho Administrativo</option>
-                            <option value="otro">Otro</option>
+                        <label for="asunto" class="contacto__form-label">Tipo de consulta</label>
+                        <select id="asunto" name="asunto" class="contacto__form-input contacto__form-select" required>
+                            <option value="" disabled selected>Selecciona un servicio</option>
+                            <option value="Salud y EPS">Salud y EPS</option>
+                            <option value="Orientación Jurídica">Orientación Jurídica</option>
+                            <option value="Derechos de Petición">Derechos de Petición</option>
+                            <option value="Deudas e Insolvencia">Deudas e Insolvencia</option>
+                            <option value="Otro">Otro</option>
                         </select>
                     </div>
 
@@ -424,12 +369,13 @@
             <div class="footer__main">
                 <div class="footer__brand">
                     <a href="#inicio" class="footer__logo">
-                        <span class="footer__logo-mark">A</span>
-                        <span class="footer__logo-divider">|</span>
-                        <span class="footer__logo-text">Abogado</span>
+                        <div class="footer__logo-icon">
+                            <img src="logoNAV.png" alt="Logo" class="footer__logo-img">
+                        </div>
+                        <span class="footer__logo-text">Tus Derechos a la Mano</span>
                     </a>
                     <p class="footer__tagline">
-                        Justicia con excelencia. Compromiso, ética y resultados 
+                        Justicia accesible para todos. Compromiso, ética y resultados 
                         que marcan la diferencia en cada caso que asumimos.
                     </p>
                 </div>
@@ -440,7 +386,6 @@
                         <li><a href="#inicio">Inicio</a></li>
                         <li><a href="#perfil">Perfil</a></li>
                         <li><a href="#servicios">Servicios</a></li>
-                        <li><a href="#clientes">Clientes</a></li>
                         <li><a href="#contacto">Contacto</a></li>
                     </ul>
                 </div>
@@ -448,11 +393,10 @@
                 <div class="footer__nav">
                     <h4 class="footer__nav-title">Servicios</h4>
                     <ul class="footer__nav-list">
-                        <li><a href="#servicios">Derecho Corporativo</a></li>
-                        <li><a href="#servicios">Litigio Civil</a></li>
-                        <li><a href="#servicios">Contratos</a></li>
-                        <li><a href="#servicios">Mediación</a></li>
-                        <li><a href="#servicios">Propiedad Intelectual</a></li>
+                        <li><a href="#servicios">Salud y EPS</a></li>
+                        <li><a href="#servicios">Orientación Jurídica</a></li>
+                        <li><a href="#servicios">Derechos de Petición</a></li>
+                        <li><a href="#servicios">Ley de Insolvencia</a></li>
                     </ul>
                 </div>
 
@@ -468,7 +412,7 @@
 
             <div class="footer__bottom">
                 <p class="footer__copyright">
-                    &copy; 2026 E | Abogado. Todos los derechos reservados.
+                    &copy; 2026 Tus Derechos a la Mano. Todos los derechos reservados.
                 </p>
                 <div class="footer__social">
                     <a href="#" aria-label="LinkedIn">
@@ -491,14 +435,14 @@
         </div>
     </footer>
 
-    <!-- ============================================ -->
-    <!-- WHATSAPP FLOATING BUTTON                     -->
-    <!-- ============================================ -->
-    <a href="https://wa.me/573146203365?text=Un%20saludo%20cordial.%20Deseo%20solicitar%20informaci%C3%B3n%20sobre%20tus%20servicios%20y%20tarifas%20para%20una%20asesor%C3%ADa%20personalizada.%20%C2%A1Gracias%21" class="whatsapp-btn" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp" class="whatsapp-btn" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
+    <!-- WHATSAPP FLOATING BUTTON (COMENTADO) -->
+    <!--
+    <a href="https://wa.me/15551234567" class="whatsapp-btn" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
         </svg>
     </a>
+    -->
 
     <script src="script.js"></script>
 </body>
