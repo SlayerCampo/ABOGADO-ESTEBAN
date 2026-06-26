@@ -5,6 +5,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const revealElements = document.querySelectorAll('.reveal-on-scroll');
 
+    // Optimizador para Celulares: Si es pantalla chica, activa todo de golpe
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile) {
+        revealElements.forEach(el => el.classList.add('revealed'));
+    }
+
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -17,14 +23,22 @@ document.addEventListener('DOMContentLoaded', function() {
         threshold: 0.1
     });
 
-    revealElements.forEach(el => {
-        revealObserver.observe(el);
-    });
+    // Solo observa si NO es celular
+    if (!isMobile) {
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+    }
 
     /* ============================================ */
     /* INTERSECTION OBSERVER - Tarjetas de Servicio */
     /* ============================================ */
     const serviceCards = document.querySelectorAll('.servicio-card');
+
+    // Optimizador para Celulares
+    if (isMobile) {
+        serviceCards.forEach(card => card.classList.add('active'));
+    }
 
     const cardObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -38,10 +52,16 @@ document.addEventListener('DOMContentLoaded', function() {
         threshold: 0.3
     });
 
-    serviceCards.forEach(card => {
-        cardObserver.observe(card);
-    });
+    // Solo observa si NO es celular
+    if (!isMobile) {
+        serviceCards.forEach(card => {
+            cardObserver.observe(card);
+        });
+    }
 
+    /* ============================================ */
+    /* NAVBAR REVEAL (Aquí continúa el resto de tu código igual...) */
+    /* ============================================ */
     /* ============================================ */
     /* NAVBAR REVEAL (Oculto en Hero, visible al scroll) */
     /* ============================================ */
@@ -249,3 +269,16 @@ document.addEventListener('DOMContentLoaded', function() {
     document.head.appendChild(styleSheet);
 
 });
+
+// Detectar si el usuario tiene internet lento o ahorro de datos activo
+if (navigator.connection) {
+    const santiagoData = navigator.connection.saveData; // ¿Ahorro de datos activo?
+    const connectionType = navigator.connection.effectiveType; // '2g', '3g', '4g'
+
+    if (santiagoData || connectionType === '2g' || connectionType === '3g') {
+        console.log("Conexión lenta detectada. Desactivando animaciones para mejorar rendimiento.");
+        
+        // Añade una clase al body para apagar efectos pesados en CSS
+        document.body.classList.add('low-performance');
+    }
+}
