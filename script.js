@@ -282,3 +282,47 @@ if (navigator.connection) {
         document.body.classList.add('low-performance');
     }
 }
+
+
+// Enviar formulario en segundo plano y mostrar Modal de éxito
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault(); 
+    
+    const form = this;
+    const formData = new FormData(form);
+    const modal = document.getElementById('successModal');
+    const closeBtn = document.getElementById('closeModalBtn');
+    
+    // Enviamos los datos de forma invisible
+    fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            // ¡ÉXITO! En vez de alert(), mostramos nuestro modal premium
+            modal.classList.add('show');
+            form.reset(); // Limpia los campos del formulario
+        } else {
+            alert('Hubo un problema al enviar el mensaje. Inténtalo de nuevo.');
+        }
+    })
+    .catch(error => {
+        alert('Error de conexión. Inténtalo de nuevo más tarde.');
+    });
+
+    // Lógica para cerrar el modal al presionar el botón "Entendido"
+    closeBtn.addEventListener('click', function() {
+        modal.classList.remove('show');
+    });
+
+    // También se cierra si hacen clic afuera de la caja del modal
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.classList.remove('show');
+        }
+    });
+});

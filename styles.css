@@ -914,3 +914,95 @@ body.low-performance * {
     animation: none !important;
     transition: none !important;
 }
+
+/* ============================================ */
+/* MODAL DE ÉXITO PREMIUM                       */
+/* ============================================ */
+.success-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px); /* Efecto de fondo borroso muy moderno */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000; /* Por encima de todo, incluso del nav */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+/* Cuando el modal esté activo */
+.success-modal.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.success-modal__content {
+    background-color: var(--color-primary-light, #252540);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2.5rem 2rem;
+    border-radius: 16px;
+    max-width: 420px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    transform: scale(0.8) translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Animación de entrada para la caja interna */
+.success-modal.show .success-modal__content {
+    transform: scale(1) translateY(0);
+}
+
+/* Icono del Check */
+.success-modal__icon {
+    width: 64px;
+    height: 64px;
+    background-color: var(--color-accent);
+    color: var(--color-white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 0 15px var(--color-accent);
+}
+
+.success-modal__title {
+    font-family: var(--font-sans);
+    color: var(--color-white);
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.success-modal__text {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.75rem;
+}
+
+/* Botón del Modal */
+.success-modal__btn {
+    background-color: transparent;
+    border: 2px solid var(--color-accent);
+    color: var(--color-white);
+    padding: 0.75rem 2.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.success-modal__btn:hover {
+    background-color: var(--color-accent);
+    box-shadow: 0 0 10px var(--color-accent);
+    transform: translateY(-2px);
+}

@@ -295,14 +295,10 @@
             </div>
 
             <div class="contacto__form-wrapper reveal-on-scroll">
-                <form action="https://formsubmit.co/tusderechosalamano@gmail.com" method="POST" class="contacto__form"></form>
-                    <input type="hidden" name="_captcha" value="false">
-
-                    <input type="hidden" name="_next" value="https://slayercampo.github.io/ABOGADO-ESTEBAN/">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_next" value="https://tusderechosalamano.com/gracias.html">
-                    <input type="hidden" name="_subject" value="Nueva consulta desde la web">
-                    <input type="hidden" name="_template" value="table">
+    <form class="contacto__form" id="contactForm" action="https://formsubmit.co/tusderechosalamano@gmail.com" method="POST">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_subject" value="Nueva consulta desde la web">
+        <input type="hidden" name="_template" value="table">
 
                     <div class="contacto__form-group">
                         <label for="nombre" class="contacto__form-label">Nombre completo</label>
@@ -327,7 +323,7 @@
                             <option value="Orientación Jurídica">Orientación Jurídica</option>
                             <option value="Derechos de Petición">Peticiones Respetuosas</option>
                             <option value="Deudas e Insolvencia">Deudas e Insolvencia</option>
-                            <option value="Tutelas">Deudas e Insolvencia</option>
+                            <option value="Tutelas">Tutelas</option>
                             <option value="Otro">Otro</option>
                         </select>
                     </div>
@@ -422,6 +418,19 @@
             </div>
         </div>
     </footer>
+
+    <div class="success-modal" id="successModal">
+        <div class="success-modal__content">
+            <div class="success-modal__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <h3 class="success-modal__title">¡Consulta Enviada!</h3>
+            <p class="success-modal__text">Tu mensaje ha sido recibido con éxito. Nos comunicaremos contigo en el menor tiempo posible.</p>
+            <button class="success-modal__btn" id="closeModalBtn">Entendido</button>
+        </div>
+    </div>
 
     <!-- WHATSAPP FLOATING BUTTON (COMENTADO) -->
     <!--
