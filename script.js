@@ -157,36 +157,62 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     /* ============================================ */
-    /* THEME SELECTOR SYSTEM (9 TEMAS)              */
+    /* DARK MODE TOGGLE                             */
     /* ============================================ */
-    const themeBtns = document.querySelectorAll('.theme-btn');
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const darkModeToggleMobile = document.getElementById('darkModeToggleMobile');
+    const darkModeIcon = document.getElementById('darkModeIcon');
+    const darkModeIconMobile = document.getElementById('darkModeIconMobile');
+    const darkModeLabelMobile = document.getElementById('darkModeLabelMobile');
     const body = document.body;
 
-    // Cargar tema guardado o usar default
-    const savedTheme = localStorage.getItem('theme') || 'principal';
-    setTheme(savedTheme);
+    // Textos del toggle
+    const labelDark = 'Modo Oscuro';
+    const labelLight = 'Modo Claro';
+    const iconDark = '🌙';
+    const iconLight = '☀️';
 
-    function setTheme(themeName) {
-        body.setAttribute('data-theme', themeName);
-
-        themeBtns.forEach(btn => {
-            btn.classList.remove('active');
-            if (btn.getAttribute('data-theme') === themeName) {
-                btn.classList.add('active');
-            }
-        });
-
-        localStorage.setItem('theme', themeName);
+    // Cargar preferencia guardada o usar default (light/principal)
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        enableDarkMode();
+    } else {
+        disableDarkMode();
     }
 
-    themeBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const theme = this.getAttribute('data-theme');
-            setTheme(theme);
-        });
-    });
+    function enableDarkMode() {
+        body.setAttribute('data-theme', 'dark');
+        if (darkModeIcon) darkModeIcon.textContent = iconLight;
+        if (darkModeIconMobile) darkModeIconMobile.textContent = iconLight;
+        if (darkModeLabelMobile) darkModeLabelMobile.textContent = labelLight;
+        localStorage.setItem('theme', 'dark');
+    }
 
- /* ============================================ */
+    function disableDarkMode() {
+        body.removeAttribute('data-theme');
+        if (darkModeIcon) darkModeIcon.textContent = iconDark;
+        if (darkModeIconMobile) darkModeIconMobile.textContent = iconDark;
+        if (darkModeLabelMobile) darkModeLabelMobile.textContent = labelDark;
+        localStorage.setItem('theme', 'light');
+    }
+
+    function toggleDarkMode() {
+        const isDark = body.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+            disableDarkMode();
+        } else {
+            enableDarkMode();
+        }
+    }
+
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+    }
+    if (darkModeToggleMobile) {
+        darkModeToggleMobile.addEventListener('click', toggleDarkMode);
+    }
+
+    /* ============================================ */
     /* CONTACT FORM - FormSubmit & AJAX Integration */
     /* ============================================ */
     const contactForm = document.getElementById('contactForm');
@@ -204,20 +230,20 @@ document.addEventListener('DOMContentLoaded', function() {
             const inputNombre = contactForm.querySelector('#nombre');
             const inputTelefono = contactForm.querySelector('#telefono');
 
-            // Limpieza del Nombre: Elimina espacios extras y capitaliza (Ej: "  bRIAN   o'CONNER  " -> "Brian O'conner")
+            // Limpieza del Nombre
             let nombreLimpio = inputNombre.value.trim().replace(/\s+/g, ' ');
             nombreLimpio = nombreLimpio.toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
 
-            // Limpieza y Formateo del Celular de Colombia (Ej: "3124210044" -> "312 421 00 44")
-            let telRaw = inputTelefono.value.replace(/\s+/g, ''); // Quita cualquier espacio por si acaso
-            
+            // Limpieza y Formateo del Celular de Colombia
+            let telRaw = inputTelefono.value.replace(/\s+/g, '');
+
             // Validamos estrictamente que tenga 10 dígitos antes de proceder
             if (telRaw.length !== 10 || isNaN(telRaw)) {
                 inputTelefono.focus();
                 return; // Detiene el envío si no es un celular válido
             }
 
-            // Aplicamos la máscara espaciada: 3 dígitos + espacio + 3 dígitos + espacio + 2 dígitos + espacio + 2 dígitos
+            // Aplicamos la máscara espaciada
             const telFormateado = `${telRaw.substring(0,3)} ${telRaw.substring(3,6)} ${telRaw.substring(6,8)} ${telRaw.substring(8,10)}`;
 
             // --- 2. EFECTO VISUAL DE "ENVIANDO..." ---
@@ -230,10 +256,9 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
 
             // --- 3. REESTRUCTURAR LOS DATOS PARA FORMSUBMIT ---
-            // Creamos un nuevo contenedor de datos para no alterar lo que el usuario ve en pantalla mientras se envía
             const finalFormData = new FormData();
-            
-            // Pasamos los valores ocultos fijos que ya tenías en tu HTML
+
+            // Pasamos los valores ocultos fijos
             const captcha = contactForm.querySelector('input[name="_captcha"]');
             const template = contactForm.querySelector('input[name="_template"]');
             if (captcha) finalFormData.append('_captcha', captcha.value);
@@ -243,7 +268,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const tipoConsulta = contactForm.querySelector('#asunto').value || "General";
             finalFormData.append('_subject', `Consulta Web: ${tipoConsulta}`);
 
-            // INYECTAMOS LOS DATOS ULTRA ORGANIZADOS Y FORMATEADOS ✨
+            // INYECTAMOS LOS DATOS ULTRA ORGANIZADOS Y FORMATEADOS
             finalFormData.append('nombre', nombreLimpio);
             finalFormData.append('email', contactForm.querySelector('input[type="email"]').value);
             finalFormData.append('telefono', telFormateado);
@@ -253,7 +278,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // --- 4. ENVÍO INVISIBLE POR AJAX (FETCH) ---
             fetch(contactForm.action, {
                 method: 'POST',
-                body: finalFormData, // Enviamos el contenedor con los datos estéticos
+                body: finalFormData,
                 headers: {
                     'Accept': 'application/json'
                 }
@@ -277,7 +302,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Lógica para cerrar el Modal
+    // Lógica para cerrar el Modal de éxito
     if (modal && closeBtn) {
         closeBtn.addEventListener('click', function() {
             modal.classList.remove('show');
@@ -291,10 +316,89 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     /* ============================================ */
+    /* MODALES LEGALES (Aviso, Términos, Ética)     */
+    /* ============================================ */
+    const legalModal = document.getElementById('legalModal');
+    const legalModalClose = document.getElementById('legalModalClose');
+    const legalModalTitle = document.getElementById('legalModalTitle');
+    const legalModalBody = document.getElementById('legalModalBody');
+    const legalTriggers = document.querySelectorAll('.legal-modal-trigger');
+
+    const legalContent = {
+        privacidad: {
+            title: 'Aviso de Privacidad',
+            body: `<p>De conformidad con la <strong>Ley 1581 de 2012</strong> y el <strong>Decreto 1377 de 2013</strong> de la República de Colombia (Protección de Datos Personales), le informamos que los datos capturados en el formulario de contacto (Nombre, Correo y Teléfono) serán tratados bajo estrictas medidas de seguridad y confidencialidad.</p>
+            <p>La finalidad exclusiva de la recolección de estos datos es realizar la gestión de su consulta jurídica, agendar la asesoría inicial y enviar notificaciones del estado de su caso. En ningún escenario sus datos serán vendidos, compartidos o expuestos a terceras partes con fines comerciales.</p>
+            <p>Como titular de la información, usted tiene derecho a conocer, actualizar, rectificar o solicitar la supresión de sus datos personales enviando una solicitud directa a nuestro correo: <strong>tusderechosalamano@gmail.com</strong>.</p>`
+        },
+        terminos: {
+            title: 'Términos de Servicio',
+            body: `<p>Bienvenido a <strong>Tus Derechos a la Mano</strong>. Al utilizar nuestro formulario web de contacto, usted acepta que la información suministrada es verídica y actual. El envío del formulario constituye una solicitud formal de contacto y no genera de forma automática una relación contractual de representación judicial o mandato de abogado-cliente.</p>
+            <p>Nuestros servicios de respuesta y asesoría inicial están sujetos a la disponibilidad de nuestros asesores jurídicos. Nos reservamos el derecho de aceptar o declinar casos basados en criterios de viabilidad jurídica, competencia profesional y carga operativa.</p>`
+        },
+        etica: {
+            title: 'Código de Ética',
+            body: `<p>En <strong>Tus Derechos a la Mano</strong> nos regimos por el <strong>Estatuto del Abogado (Ley 1123 de 2007 de Colombia)</strong>, asumiendo los principios de honradez, lealtad, diligencia y secreto profesional en cada consulta recibida.</p>
+            <p>Establecemos un compromiso de atención transparente basado en las siguientes pautas:</p>
+            <ol>
+                <li>Las consultas recibidas serán analizadas individualmente con absoluta objetividad jurídica.</li>
+                <li>Nuestro horario de atención oficial es de <strong>Lunes a Viernes de 8:00 am a 5:00 pm</strong>. Las solicitudes que ingresen fuera de este horario o durante fines de semana se gestionarán con máxima prioridad al inicio de la siguiente jornada hábil.</li>
+                <li>Se garantiza una respuesta inicial o confirmación de viabilidad en un plazo óptimo, asegurando que el ciudadano comprenda de manera clara y sin tecnicismos complejos las opciones reales para la protección de sus derechos esenciales.</li>
+            </ol>`
+        }
+    };
+
+    function openLegalModal(type) {
+        const content = legalContent[type];
+        if (!content || !legalModal || !legalModalTitle || !legalModalBody) return;
+
+        legalModalTitle.textContent = content.title;
+        legalModalBody.innerHTML = content.body;
+        legalModal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLegalModal() {
+        if (legalModal) {
+            legalModal.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+    }
+
+    legalTriggers.forEach(trigger => {
+        trigger.addEventListener('click', function(e) {
+            e.preventDefault();
+            const modalType = this.getAttribute('data-modal');
+            openLegalModal(modalType);
+        });
+    });
+
+    if (legalModalClose) {
+        legalModalClose.addEventListener('click', closeLegalModal);
+    }
+
+    if (legalModal) {
+        legalModal.addEventListener('click', function(e) {
+            if (e.target === legalModal) {
+                closeLegalModal();
+            }
+        });
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeLegalModal();
+        }
+    });
+
+    /* ============================================ */
     /* SMOOTH SCROLL OFFSET FOR FIXED HEADER        */
     /* ============================================ */
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
+            // No interceptar los triggers de modales legales
+            if (this.classList.contains('legal-modal-trigger')) return;
+
             e.preventDefault();
             const targetId = this.getAttribute('href');
             const targetElement = document.querySelector(targetId);

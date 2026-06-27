@@ -9,9 +9,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/png" href="favicon.png">
+    <base target="_blank">
 <base target="_blank">
 </head>
-<body data-theme="principal">
+<body>
 
     <!-- ============================================ -->
     <!-- HEADER / NAVBAR (Oculto inicialmente)        -->
@@ -31,36 +32,20 @@
                     <li><a href="#perfil" class="header__nav-link">Perfil</a></li>
                     <li><a href="#servicios" class="header__nav-link">Servicios</a></li>
                     <li><a href="#contacto" class="header__nav-link">Contacto</a></li>
-                    <!-- Selector de temas (visible en móvil dentro del menú) -->
+                    <!-- Toggle Dark Mode (visible en móvil dentro del menú) -->
                     <li class="header__theme-mobile">
-                        <span class="header__theme-label">Tema</span>
-                        <div class="theme-selector theme-selector--mobile">
-                            <button class="theme-btn" data-theme="principal" title="Principal" aria-label="Tema Principal"></button>
-                            <button class="theme-btn" data-theme="clasico" title="Clásico" aria-label="Tema Clásico"></button>
-                            <button class="theme-btn" data-theme="monocromatico" title="Monocromático" aria-label="Tema Monocromático"></button>
-                            <button class="theme-btn" data-theme="confianza" title="Confianza" aria-label="Tema Confianza"></button>
-                            <button class="theme-btn" data-theme="amatista" title="Amatista" aria-label="Tema Amatista"></button>
-                            <button class="theme-btn" data-theme="azul-acero" title="Azul Acero" aria-label="Tema Azul Acero"></button>
-                            <button class="theme-btn" data-theme="bordeaux" title="Bordeaux" aria-label="Tema Bordeaux"></button>
-                            <button class="theme-btn" data-theme="obsidiana" title="Obsidiana" aria-label="Tema Obsidiana"></button>
-                            <button class="theme-btn" data-theme="zafiro" title="Zafiro" aria-label="Tema Zafiro"></button>
-                        </div>
+                        <button class="dark-mode-toggle" id="darkModeToggleMobile" aria-label="Cambiar modo oscuro">
+                            <span class="dark-mode-toggle__icon" id="darkModeIconMobile">🌙</span>
+                            <span class="dark-mode-toggle__label" id="darkModeLabelMobile">Modo Oscuro</span>
+                        </button>
                     </li>
                 </ul>
             </nav>
 
-            <!-- Selector de temas (visible en escritorio) -->
-            <div class="theme-selector theme-selector--desktop">
-                <button class="theme-btn" data-theme="principal" title="Principal" aria-label="Tema Principal"></button>
-                <button class="theme-btn" data-theme="clasico" title="Clásico" aria-label="Tema Clásico"></button>
-                <button class="theme-btn" data-theme="monocromatico" title="Monocromático" aria-label="Tema Monocromático"></button>
-                <button class="theme-btn" data-theme="confianza" title="Confianza" aria-label="Tema Confianza"></button>
-                <button class="theme-btn" data-theme="amatista" title="Amatista" aria-label="Tema Amatista"></button>
-                <button class="theme-btn" data-theme="azul-acero" title="Azul Acero" aria-label="Tema Azul Acero"></button>
-                <button class="theme-btn" data-theme="bordeaux" title="Bordeaux" aria-label="Tema Bordeaux"></button>
-                <button class="theme-btn" data-theme="obsidiana" title="Obsidiana" aria-label="Tema Obsidiana"></button>
-                <button class="theme-btn" data-theme="zafiro" title="Zafiro" aria-label="Tema Zafiro"></button>
-            </div>
+            <!-- Toggle Dark Mode (visible en escritorio) -->
+            <button class="dark-mode-toggle dark-mode-toggle--desktop" id="darkModeToggle" aria-label="Cambiar modo oscuro">
+                <span class="dark-mode-toggle__icon" id="darkModeIcon">🌙</span>
+            </button>
 
             <button class="header__hamburger" id="hamburgerBtn" aria-label="Menú" aria-expanded="false">
                 <span class="header__hamburger-line"></span>
@@ -239,7 +224,8 @@
             <p class="banner-imagen__text reveal-on-scroll">"La justicia no debe ser un privilegio, sino un derecho accesible para todos."</p>
         </div>
     </section>
-<!-- ============================================ -->
+
+    <!-- ============================================ -->
     <!-- CONTACTO                                     -->
     <!-- ============================================ -->
     <section class="contacto" id="contacto">
@@ -258,11 +244,6 @@
 
                 <div class="contacto__details reveal-on-scroll">
                     <div class="contacto__detail">
-                        
-                    </div>
-                    
-
-                    <div class="contacto__detail">
                         <div class="contacto__detail-icon">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
@@ -273,10 +254,6 @@
                             <span class="contacto__detail-label">Correo electrónico</span>
                             <span class="contacto__detail-value">tusderechosalamano@gmail.com</span>
                         </div>
-                    </div>
-
-                    <div class="contacto__detail">
-                    
                     </div>
 
                     <div class="contacto__detail">
@@ -351,6 +328,7 @@
             </div>
         </div>
     </section>
+
     <!-- ============================================ -->
     <!-- FOOTER                                       -->
     <!-- ============================================ -->
@@ -393,9 +371,9 @@
                 <div class="footer__nav">
                     <h4 class="footer__nav-title">Legal</h4>
                     <ul class="footer__nav-list">
-                        <li><a href="#">Aviso de Privacidad</a></li>
-                        <li><a href="#">Términos de Servicio</a></li>
-                        <li><a href="#">Código de Ética</a></li>
+                        <li><a href="#" class="legal-modal-trigger" data-modal="privacidad">Aviso de Privacidad</a></li>
+                        <li><a href="#" class="legal-modal-trigger" data-modal="terminos">Términos de Servicio</a></li>
+                        <li><a href="#" class="legal-modal-trigger" data-modal="etica">Código de Ética</a></li>
                     </ul>
                 </div>
             </div>
@@ -404,6 +382,8 @@
                 <p class="footer__copyright">
                     &copy; 2026 Tus Derechos a la Mano. Todos los derechos reservados.
                 </p>
+                <!-- Redes Sociales (comentadas para uso futuro) -->
+                <!--
                 <div class="footer__social">
                     <a href="#" aria-label="LinkedIn">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -421,10 +401,14 @@
                         </svg>
                     </a>
                 </div>
+                -->
             </div>
         </div>
     </footer>
 
+    <!-- ============================================ -->
+    <!-- MODAL DE ÉXITO DEL FORMULARIO                -->
+    <!-- ============================================ -->
     <div class="success-modal" id="successModal">
         <div class="success-modal__content">
             <div class="success-modal__icon">
@@ -435,6 +419,22 @@
             <h3 class="success-modal__title">¡Consulta Enviada!</h3>
             <p class="success-modal__text">Tu mensaje ha sido recibido con éxito. Nos comunicaremos contigo en el menor tiempo posible.</p>
             <button class="success-modal__btn" id="closeModalBtn">Entendido</button>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- MODALES LEGALES (Aviso, Términos, Ética)     -->
+    <!-- ============================================ -->
+    <div class="legal-modal" id="legalModal">
+        <div class="legal-modal__content">
+            <button class="legal-modal__close" id="legalModalClose" aria-label="Cerrar modal">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <h3 class="legal-modal__title" id="legalModalTitle"></h3>
+            <div class="legal-modal__body" id="legalModalBody"></div>
         </div>
     </div>
 
