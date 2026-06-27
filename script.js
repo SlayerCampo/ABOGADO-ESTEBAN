@@ -60,9 +60,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     /* ============================================ */
-    /* NAVBAR REVEAL (Aquí continúa el resto de tu código igual...) */
-    /* ============================================ */
-    /* ============================================ */
     /* NAVBAR REVEAL (Oculto en Hero, visible al scroll) */
     /* ============================================ */
     const header = document.getElementById('header');
@@ -189,16 +186,41 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    /* ============================================ */
-    /* CONTACT FORM - FormSubmit Integration        */
+ /* ============================================ */
+    /* CONTACT FORM - FormSubmit & AJAX Integration */
     /* ============================================ */
     const contactForm = document.getElementById('contactForm');
+    const modal = document.getElementById('successModal');
+    const closeBtn = document.getElementById('closeModalBtn');
 
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Evitamos recarga de página
+
             const submitBtn = contactForm.querySelector('.contacto__form-submit');
             const originalText = submitBtn.innerHTML;
 
+            // --- 1. VALIDACIÓN Y FORMATEO INTERNO DE DATOS ---
+            const inputNombre = contactForm.querySelector('#nombre');
+            const inputTelefono = contactForm.querySelector('#telefono');
+
+            // Limpieza del Nombre: Elimina espacios extras y capitaliza (Ej: "  bRIAN   o'CONNER  " -> "Brian O'conner")
+            let nombreLimpio = inputNombre.value.trim().replace(/\s+/g, ' ');
+            nombreLimpio = nombreLimpio.toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+
+            // Limpieza y Formateo del Celular de Colombia (Ej: "3124210044" -> "312 421 00 44")
+            let telRaw = inputTelefono.value.replace(/\s+/g, ''); // Quita cualquier espacio por si acaso
+            
+            // Validamos estrictamente que tenga 10 dígitos antes de proceder
+            if (telRaw.length !== 10 || isNaN(telRaw)) {
+                inputTelefono.focus();
+                return; // Detiene el envío si no es un celular válido
+            }
+
+            // Aplicamos la máscara espaciada: 3 dígitos + espacio + 3 dígitos + espacio + 2 dígitos + espacio + 2 dígitos
+            const telFormateado = `${telRaw.substring(0,3)} ${telRaw.substring(3,6)} ${telRaw.substring(6,8)} ${telRaw.substring(8,10)}`;
+
+            // --- 2. EFECTO VISUAL DE "ENVIANDO..." ---
             submitBtn.disabled = true;
             submitBtn.innerHTML = `
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: spin 1s linear infinite;">
@@ -207,12 +229,64 @@ document.addEventListener('DOMContentLoaded', function() {
                 Enviando...
             `;
 
-            setTimeout(() => {
-                if (submitBtn.disabled) {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalText;
+            // --- 3. REESTRUCTURAR LOS DATOS PARA FORMSUBMIT ---
+            // Creamos un nuevo contenedor de datos para no alterar lo que el usuario ve en pantalla mientras se envía
+            const finalFormData = new FormData();
+            
+            // Pasamos los valores ocultos fijos que ya tenías en tu HTML
+            const captcha = contactForm.querySelector('input[name="_captcha"]');
+            const template = contactForm.querySelector('input[name="_template"]');
+            if (captcha) finalFormData.append('_captcha', captcha.value);
+            if (template) finalFormData.append('_template', template.value);
+
+            // Asunto dinámico automático
+            const tipoConsulta = contactForm.querySelector('#asunto').value || "General";
+            finalFormData.append('_subject', `Consulta Web: ${tipoConsulta}`);
+
+            // INYECTAMOS LOS DATOS ULTRA ORGANIZADOS Y FORMATEADOS ✨
+            finalFormData.append('nombre', nombreLimpio);
+            finalFormData.append('email', contactForm.querySelector('input[type="email"]').value);
+            finalFormData.append('telefono', telFormateado);
+            finalFormData.append('asunto', tipoConsulta);
+            finalFormData.append('mensaje', contactForm.querySelector('textarea').value);
+
+            // --- 4. ENVÍO INVISIBLE POR AJAX (FETCH) ---
+            fetch(contactForm.action, {
+                method: 'POST',
+                body: finalFormData, // Enviamos el contenedor con los datos estéticos
+                headers: {
+                    'Accept': 'application/json'
                 }
-            }, 10000);
+            })
+            .then(response => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+
+                if (response.ok) {
+                    if (modal) modal.classList.add('show');
+                    contactForm.reset(); 
+                } else {
+                    alert('Hubo un problema al enviar el mensaje. Inténtalo de nuevo.');
+                }
+            })
+            .catch(error => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                alert('Error de conexión. Inténtalo de nuevo más tarde.');
+            });
+        });
+    }
+
+    // Lógica para cerrar el Modal
+    if (modal && closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            modal.classList.remove('show');
+        });
+
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.classList.remove('show');
+            }
         });
     }
 
@@ -270,59 +344,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-// Detectar si el usuario tiene internet lento o ahorro de datos activo
+/* ============================================ */
+/* NETWORK & PERFORMANCE OPTIMIZATION           */
+/* ============================================ */
 if (navigator.connection) {
-    const santiagoData = navigator.connection.saveData; // ¿Ahorro de datos activo?
-    const connectionType = navigator.connection.effectiveType; // '2g', '3g', '4g'
+    const santiagoData = navigator.connection.saveData; 
+    const connectionType = navigator.connection.effectiveType; 
 
     if (santiagoData || connectionType === '2g' || connectionType === '3g') {
         console.log("Conexión lenta detectada. Desactivando animaciones para mejorar rendimiento.");
-        
-        // Añade una clase al body para apagar efectos pesados en CSS
         document.body.classList.add('low-performance');
     }
 }
-
-
-// Enviar formulario en segundo plano y mostrar Modal de éxito
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault(); 
-    
-    const form = this;
-    const formData = new FormData(form);
-    const modal = document.getElementById('successModal');
-    const closeBtn = document.getElementById('closeModalBtn');
-    
-    // Enviamos los datos de forma invisible
-    fetch(form.action, {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        if (response.ok) {
-            // ¡ÉXITO! En vez de alert(), mostramos nuestro modal premium
-            modal.classList.add('show');
-            form.reset(); // Limpia los campos del formulario
-        } else {
-            alert('Hubo un problema al enviar el mensaje. Inténtalo de nuevo.');
-        }
-    })
-    .catch(error => {
-        alert('Error de conexión. Inténtalo de nuevo más tarde.');
-    });
-
-    // Lógica para cerrar el modal al presionar el botón "Entendido"
-    closeBtn.addEventListener('click', function() {
-        modal.classList.remove('show');
-    });
-
-    // También se cierra si hacen clic afuera de la caja del modal
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            modal.classList.remove('show');
-        }
-    });
-});

@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="favicon.png">
 <base target="_blank">
 </head>
 <body data-theme="principal">
@@ -238,9 +239,8 @@
             <p class="banner-imagen__text reveal-on-scroll">"La justicia no debe ser un privilegio, sino un derecho accesible para todos."</p>
         </div>
     </section>
-
-    <!-- ============================================ -->
-    <!-- CONTACTO SECTION                             -->
+<!-- ============================================ -->
+    <!-- CONTACTO                                     -->
     <!-- ============================================ -->
     <section class="contacto" id="contacto">
         <div class="contacto__container">
@@ -259,8 +259,8 @@
                 <div class="contacto__details reveal-on-scroll">
                     <div class="contacto__detail">
                         
-                        
                     </div>
+                    
 
                     <div class="contacto__detail">
                         <div class="contacto__detail-icon">
@@ -295,14 +295,14 @@
             </div>
 
             <div class="contacto__form-wrapper reveal-on-scroll">
-    <form class="contacto__form" id="contactForm" action="https://formsubmit.co/tusderechosalamano@gmail.com" method="POST">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_subject" value="Nueva consulta desde la web">
-        <input type="hidden" name="_template" value="table">
+                <form class="contacto__form" id="contactForm" action="https://formsubmit.co/tusderechosalamano@gmail.com" method="POST">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_subject" value="Nueva consulta desde la web">
+                    <input type="hidden" name="_template" value="table">
 
                     <div class="contacto__form-group">
                         <label for="nombre" class="contacto__form-label">Nombre completo</label>
-                        <input type="text" id="nombre" name="nombre" class="contacto__form-input" placeholder="Tu nombre" required>
+                        <input type="text" id="nombre" name="nombre" class="contacto__form-input" placeholder="Tu nombre y apellido" required>
                     </div>
 
                     <div class="contacto__form-group">
@@ -312,7 +312,14 @@
 
                     <div class="contacto__form-group">
                         <label for="telefono" class="contacto__form-label">Teléfono</label>
-                        <input type="tel" id="telefono" name="telefono" class="contacto__form-input" placeholder="+1 (555) 000-0000">
+                        <input type="tel" 
+                               id="telefono" 
+                               name="telefono" 
+                               class="contacto__form-input" 
+                               placeholder="Digite tu numero de celular" 
+                               pattern="[0-9]{10}" 
+                               maxlength="10" 
+                               required>
                     </div>
 
                     <div class="contacto__form-group">
@@ -344,7 +351,6 @@
             </div>
         </div>
     </section>
-
     <!-- ============================================ -->
     <!-- FOOTER                                       -->
     <!-- ============================================ -->
